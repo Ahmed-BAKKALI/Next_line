@@ -6,7 +6,7 @@
 /*   By: ahbakkal <ahbakkal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:54:50 by ahbakkal          #+#    #+#             */
-/*   Updated: 2024/03/23 00:21:55 by ahbakkal         ###   ########.fr       */
+/*   Updated: 2024/04/07 22:59:47 by ahbakkal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_read(char *conservator, int fd)
 	int		i;
 
 	rd = -2;
-	i = 0;
+	// i = 0;
 	freader = malloc(BUFFER_SIZE + 1);
 	if (!freader)
 		return (free(conservator), conservator = NULL, NULL);
