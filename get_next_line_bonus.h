@@ -6,7 +6,7 @@
 /*   By: ahbakkal <ahbakkal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 21:39:54 by ahbakkal          #+#    #+#             */
-/*   Updated: 2024/03/22 21:57:42 by ahbakkal         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:10:51 by ahbakkal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 char	*get_next_line(int fd);
 char	*ft_read(char *conservator, int fd);
 char	*copy_line(char **conservator);
-char	*ft_substr(char *s, int start, int len);
+char	*ft_substr(char *s, int len);
 int		check_new(char *conservator);
 char	*ft_strdup(char *s1, int j);
 char	*ft_strjoin(char *s1, char *s2);

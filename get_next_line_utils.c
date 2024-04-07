@@ -6,7 +6,7 @@
 /*   By: ahbakkal <ahbakkal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:54:53 by ahbakkal          #+#    #+#             */
-/*   Updated: 2024/03/23 00:28:40 by ahbakkal         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:04:20 by ahbakkal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,22 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_substr(char *s, int start, int len)
+char	*ft_substr(char *s, int len)
 {
 	int		i;
 	char	*d;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	i = 0;
 	if (*s == '\0')
 		return (NULL);
-	// if (len > ft_strlen(s + start))
-	// 	len = ft_strlen(s + start);
 	d = malloc(len + 1);
-	if (d == NULL)
+	if (!d)
 		return (NULL);
 	while (len--)
 	{
-		d[i] = s[start + i];
+		d[i] = s[i];
 		i++;
 	}
 	d[i] = '\0';
@@ -55,13 +53,13 @@ char	*ft_strdup(char *s1, int j)
 
 	i = 0;
 	if (!s1)
-		return (0);
+		return (NULL);
 	s2 = malloc((ft_strlen(s1 + j) + 1) * sizeof(char));
 	if (!s2)
 	{
 		free(s1);
-		s1 = 0;
-		return (0);
+		s1 = NULL;
+		return (NULL);
 	}
 	while (s1[j])
 	{
@@ -71,7 +69,7 @@ char	*ft_strdup(char *s1, int j)
 	}
 	s2[i] = '\0';
 	free(s1);
-	s1 = 0;
+	s1 = NULL;
 	return (s2);
 }
 
@@ -83,11 +81,12 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
+	if (!s1 && !s2)
+		return (NULL);
 	d = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!d)
 	{
 		free(s1);
-		free(s2);
 		return (NULL);
 	}
 	while (s1 && s1[i])
@@ -99,5 +98,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		d[i++] = s2[j++];
 	d[i] = '\0';
 	free(s1);
+	s1 = 0;
 	return (d);
 }

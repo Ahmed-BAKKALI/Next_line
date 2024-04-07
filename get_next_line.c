@@ -6,7 +6,7 @@
 /*   By: ahbakkal <ahbakkal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:54:50 by ahbakkal          #+#    #+#             */
-/*   Updated: 2024/04/07 22:59:47 by ahbakkal         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:03:04 by ahbakkal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_new(char *conservator)
 	i = 0;
 	if (conservator == NULL)
 		return (-1);
-	while (conservator[i] != '\0')
+	while (conservator && conservator[i] != '\0')
 	{
 		if (conservator[i] == '\n')
 			return (i);
@@ -32,12 +32,11 @@ char	*copy_line(char **conservator)
 {
 	char	*one_line;
 
-	one_line = ft_substr(*conservator, 0, check_new(*conservator) + 1);
-	if (one_line == NULL)
-	{
-		free(*conservator);
+	if(*conservator == NULL)
 		return (NULL);
-	}
+	one_line = ft_substr(*conservator, check_new(*conservator) + 1);
+	if (one_line == NULL)
+		return (NULL);
 	*conservator = ft_strdup(*conservator, check_new(*conservator) + 1);
 	return (one_line);
 }
@@ -49,25 +48,26 @@ char	*ft_read(char *conservator, int fd)
 	int		i;
 
 	rd = -2;
-	// i = 0;
-	freader = malloc(BUFFER_SIZE + 1);
-	if (!freader)
-		return (free(conservator), conservator = NULL, NULL);
-	while (check_new(conservator) == -1)
+	i = -1;
+	freader = NULL;
+	while (i == -1)
 	{
+		freader = malloc(BUFFER_SIZE + 1);
+		if (!freader)
+			return (free(conservator), conservator = NULL, NULL);
 		rd = read(fd, freader, BUFFER_SIZE);
 		if (rd == -1)
-			return (NULL);
-		if (rd == 0)
-			break ;
+			return (free(freader), NULL);
 		freader[rd] = '\0';
+		i = check_new(freader);
+		if (rd == 0)
+			return(free(freader), freader = NULL, conservator);
 		conservator = ft_strjoin(conservator, freader);
 		if (conservator == NULL)
-			return (freader = NULL, NULL);
+			return (free(freader), freader = NULL, NULL);
+		free(freader);
 	}
-	free(freader);
-	freader = NULL;
-	return (conservator);
+	return (freader = NULL, conservator);
 }
 
 char	*get_next_line(int fd)
@@ -93,6 +93,6 @@ char	*get_next_line(int fd)
 	}
 	one_line = copy_line(&conservator);
 	if (one_line == NULL)
-		return (conservator = NULL, NULL);
+		return (free(conservator), conservator = NULL, NULL);
 	return (one_line);
 }
